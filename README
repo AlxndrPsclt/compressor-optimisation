@@ -1,0 +1,6 @@
+Kod optymizacji wielokryterialnej urzywajacy algorytm AMGA 2. Dziala na moim komputerze.
+Doddalem plik added_functions.h w ktorym znajduja sie funkcjie Kosztu, Energi i ograniczenie. Nie jestem na 100%pewien czy funkcja kosztu jest ta o ktorej mowilismy, ale gdy sie pojawi na docsie to zmienie ja by byla ta sama.
+W tym pliku sa tez zdefiniowane stale o ktory mowilismy. Stale Cv i Cp sa dane dla gazu Co2; stale kosztu po prostu wybralem. Temperatura jest standardowa 290K.
+Main znajduje sie w folderze TEST_QT, zmienilem tam wartosci dopuszczalne by byly miedzy p_in (cisnienie wejsciowe) i p_out.
+
+Wyswietlilem dane w excelu i wyglada na ladny, klassyczny front pareto.
