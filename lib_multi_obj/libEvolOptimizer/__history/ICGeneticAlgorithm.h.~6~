@@ -1,0 +1,16 @@
+//---------------------------------------------------------------------------
+
+#ifndef ICGeneticAlgorithmH
+#define ICGeneticAlgorithmH
+//---------------------------------------------------------------------------
+class ICGeneticAlgorithm {
+
+public:
+	virtual ~CGeneticAlgorithm() {};
+
+private:
+   double FMutation;
+   double FCrossover;
+};
+
+#endif

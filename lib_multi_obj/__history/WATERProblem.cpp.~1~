@@ -1,0 +1,130 @@
+#include "WATERProblem.h"
+#include "BasicFunctions.h"
+#include <math.h>
+
+#define _USE_MATH_DEFINES
+
+namespace {
+	class WATER_F1 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return ((106780.37 * (_pf[0] + _pf[1])) + 61704.67)/10000.;
+    }
+	};
+
+	class WATER_F2 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return (3000 * _pf[0])/1500.;
+    }
+	};
+
+	class WATER_F3 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return (((305700) * 2289 * _pf[1]) / pow((0.06 * 2289),0.65))/(3*pow(10,6));
+    }
+	};
+
+	class WATER_F4 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return ((250) * 2289 * exp((-39.75 * _pf[1]) + (9.9*_pf[2]) + 2.74))/(6*pow(10,6));
+    }
+	};
+
+	class WATER_F5 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return ((25 * (1.39/(_pf[0] * _pf[1]))) + (4940*_pf[2]) -80)/8000;
+    }
+	};
+
+
+
+
+	//CONSTRAINTS...
+		class WATER_C1 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return (0.00139/(_pf[0] * _pf[1])) + (4.94 * _pf[2]) - (0.08) - (1);
+    }
+	};
+
+	class WATER_C2 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return (0.00306/(_pf[0] * _pf[1])) + (1.082 * _pf[2]) - (0.00986) - 1;
+    }
+	};
+
+	class WATER_C3 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return (12.307/(_pf[0] * _pf[1])) + (49408.24 * _pf[2]) + (4051.02) - 50000;
+    }
+	};
+
+	class WATER_C4 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return (2.098/(_pf[0] * _pf[1])) + (8046.33 * _pf[2]) - (696.71) - 16000;
+    }
+	};
+
+	class WATER_C5 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return (2.138/(_pf[0] * _pf[1])) + (7883.39 * _pf[2]) - 705.04 - 10000;
+    }
+	};
+
+		class WATER_C6 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return (0.417/(_pf[0] * _pf[1])) + (1721.26 * _pf[2]) - (136.54) - 2000;
+    }
+	};
+
+		class WATER_C7 : public ICQualityFunction {
+  public:
+    double calculate(double* _pf, unsigned int _nf) {
+    	return (0.164/(_pf[0] * _pf[1])) + (631.13* _pf[2]) - (54.48) - 550;
+    }
+	};
+
+
+}
+
+
+WATERProblem::WATERProblem() {
+	m_objectiveFunctions.push_back(new WATER_F1());
+  m_objectiveFunctions.push_back(new WATER_F2());
+  m_objectiveFunctions.push_back(new WATER_F3());
+  m_objectiveFunctions.push_back(new WATER_F4());
+  m_objectiveFunctions.push_back(new WATER_F5());
+
+  //"less-than" constraints!
+  m_constraintFunctions.push_back(new WATER_C1());
+  m_constraintFunctions.push_back(new WATER_C2());
+  m_constraintFunctions.push_back(new WATER_C3());
+  m_constraintFunctions.push_back(new WATER_C4());
+  m_constraintFunctions.push_back(new WATER_C5());
+  m_constraintFunctions.push_back(new WATER_C6());
+  m_constraintFunctions.push_back(new WATER_C7());
+
+  m_dimensions = 3;
+
+
+	m_variableHighLimits.push_back(0.45);
+	m_variableLowLimits.push_back(0.01);
+
+	m_variableHighLimits.push_back(0.10);
+	m_variableLowLimits.push_back(0.01);
+
+	m_variableHighLimits.push_back(0.10);
+	m_variableLowLimits.push_back(0.01);
+
+
+  m_name = "WATER";
+}

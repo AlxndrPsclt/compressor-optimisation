@@ -1,0 +1,12 @@
+#ifndef WATERProblem_H
+#define WATERProblem_H
+
+#include <src/libEvolOptimizer/CMultiObjectiveTestProblem.h>
+
+class WATERProblem : public CMultiObjectiveTestProblem {
+	public :
+		WATERProblem();
+};
+
+
+#endif

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2014-11-19 15:59:33.034.cbproj,C:\Users\Marcin Stachura\Documents\RAD Studio\Projects\Project1.cbproj=C:\Users\Marcin Stachura\Documents\RAD Studio\Projects\test.cbproj</Transaction>
+    <Transaction>2014-11-19 15:59:56.716.cpp,C:\Users\Marcin Stachura\Documents\RAD Studio\Projects\File1.cpp=D:\wds\lib_multi_obj\File1.cpp</Transaction>
+    <Transaction>2014-11-19 15:59:57.976.cbproj,C:\Users\Marcin Stachura\Documents\RAD Studio\Projects\test.cbproj=D:\wds\lib_multi_obj\test.cbproj</Transaction>
+    <Transaction>2014-11-19 16:01:54.456.cpp,D:\wds\lib_multi_obj\Unit1.cpp=D:\wds\lib_multi_obj\simple_functions.cpp</Transaction>
+    <Transaction>2014-11-19 16:01:54.456.h,D:\wds\lib_multi_obj\Unit1.h=D:\wds\lib_multi_obj\simple_functions.h</Transaction>
+  </Transactions>
+</BorlandProject>

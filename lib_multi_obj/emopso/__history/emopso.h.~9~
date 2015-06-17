@@ -1,0 +1,164 @@
+#ifndef EFILE_H
+#define EFILE_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
+#include <math.h>
+
+#include "../libEvolOptimizer/ICMultiObjectiveOptimizer.h"
+
+
+
+class EPSs{
+public:
+  std::vector<double> eps;
+};
+
+class Particle{
+public:
+  std::vector<double> vel;
+  std::vector<double> constraints;
+  std::vector<double>  x;
+  std::vector<double>  nx;
+  std::vector<double>  fx;
+  std::vector<double>  xpbest;
+  std::vector<double>  fxpbest;
+  std::vector<EPSs> epss;
+  int subswarm;
+  Particle(int _dimensions, int _objectives, int _constraints);
+  CMultiObjectiveSolution * convertToCMultiObjectiveSolution() ;
+  //Particle(const Particle & other);
+
+};
+
+class EFILE{
+
+  std::vector<double> tlb,tub;
+  int ndimensions;
+  int nobjectives;
+  int nconstr;
+  int nsolutions;
+  int maxbests;
+  int nclusters;
+  int allnsolutions;
+  int maxsolutions;
+  bool hasentered;
+  bool firsttime;
+  std::vector<double> xtlb,xtub;
+  std::vector<int> nsolutionsbyswarm;
+  bool hasclusteredfirsttime;
+  int pmsize;
+  double ** proximitymatrix;
+  int ** proximitymatrixindex;
+public:
+  bool updatematrix;
+  std::vector<double> EPS;
+  std::vector<Particle> solutions;
+  std::vector<Particle> allsolutions;
+  void init(int _ndimensions, int _nobjectives, int _nclusters,int _maxsolutions, int _maxbests, int nconstr);
+  EFILE();
+  int nClusteredSolutions(int _whichcluster);
+  int selectClusteredSolution(int _whichcluster,int _whichsolution);
+  //  void add(vector<Particle> &_sol);
+  //void add(Particle _s);
+  CMultiObjectiveSolutionSet * output();
+  bool add(Particle &_s,int _whichcluster=-1);
+  bool addAll(Particle &_s);
+  void clear();
+  void update();
+  bool reAdd();
+  void finalSolutions();
+  void deleteExcedent();
+  int falseReAdd();
+  void printSolutions();
+  int  domine(Particle &_a, Particle &_b);
+  int  dominePBest(Particle &_a);
+  int  domine1(Particle&_a, Particle&_b);
+  int  domine1PBest(Particle &_a);
+  int  domine2(Particle&_a, Particle&_b);
+  int  domine2PBest(Particle&_a);
+  double  euclideanDistance(std::vector<double> &_a,std::vector<double> &_b);
+  void normalizeDistances1();
+  void normalizeDistances2();
+
+  int deleteFromCluster(int _whichsolution);
+  void add2Cluster(int _whichcluster);
+  int substractFromTo(int _from, int _to, int _quantity);
+  int updateClusters(std::vector<int> &_whichparticles);
+
+  void normalizeDistances();
+  void hierarchicalClustering();
+  void createProximityMatrix();
+  void copy2Column(int _i);
+  void copy2Row(int _i);
+  void findLowestValue(int *_i,int *_j);
+  void deleteRow(int _j);
+  void deleteColumn(int _i);
+  void joinColumns(int _i,int _j);
+
+  int selectRandomSolution(int _whichcluster);
+  int selectClusteredRandomSolution(int _whichcluster);
+  double rnd(double _min,double _max);
+  int nSolutions();
+
+  double EFILE_MAX;
+  double EFILE_MIN;
+};
+
+
+
+
+
+
+class EMOPSO : public ICMultiObjectiveOptimizer {
+
+friend class EFILE;
+
+public:
+  EMOPSO();
+  ~EMOPSO();
+
+  void run();
+  virtual const char* getName() {return "EMOPSO";}
+  void setNumberOfClusters(int n);
+  int getNuberOfClusters();
+
+	private :
+  int _numberOfClusters;
+
+  double rnd(double _min,double _max);
+  void function(int _w);
+
+  void computeConstraints(int i);
+  void computeObjectives(int i);
+
+  void alocateMemory();
+
+  void initialize();
+  //int selectGBest(int _swarm);
+  void flight();
+  void execute();
+  void copyx(std::vector<double> &_a,std::vector<double> &_b);
+  void copyfx(std::vector<double> &_a,std::vector<double> &_b);
+  void copy(std::vector<double> &_a,std::vector<double> &_b);
+  void addClusters();
+  int selectGbest(int _whichcluster);
+  void perturbation(int );
+
+  std::vector<double> lb,ub;
+  int ndimensions;
+  int nobjectives;
+  int nconstr;
+  int nparticles;
+  int gmax;
+  std::vector<Particle> particles;
+  double W,C1,C2;
+  int nclusters;
+  EFILE archive;
+  int gen;
+
+};
+
+#endif
+

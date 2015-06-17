@@ -1,0 +1,12 @@
+//---------------------------------------------------------------------------
+
+#ifndef CCeneticAlgorithmH
+#define CCeneticAlgorithmH
+//---------------------------------------------------------------------------
+class ICGeneticAlgorithm {
+
+	virtual ~CCenetic
+
+};
+
+#endif

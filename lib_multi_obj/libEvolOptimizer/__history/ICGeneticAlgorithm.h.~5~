@@ -1,0 +1,14 @@
+//---------------------------------------------------------------------------
+
+#ifndef ICGeneticAlgorithmH
+#define ICGeneticAlgorithmH
+//---------------------------------------------------------------------------
+class ICGeneticAlgorithm {
+
+public:
+	virtual ~CGeneticAlgorithm() {};
+
+private:
+};
+
+#endif

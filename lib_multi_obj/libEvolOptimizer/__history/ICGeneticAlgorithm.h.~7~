@@ -1,0 +1,18 @@
+//---------------------------------------------------------------------------
+
+#ifndef ICGeneticAlgorithmH
+#define ICGeneticAlgorithmH
+//---------------------------------------------------------------------------
+class ICGeneticAlgorithm {
+
+public:
+	virtual ~CGeneticAlgorithm() {};
+
+	void setFPMutation(double _pmut){FPMutation = _pmut;}
+
+private:
+   double FPMutation;
+   double FPCrossover;
+};
+
+#endif

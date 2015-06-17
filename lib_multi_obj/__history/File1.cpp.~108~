@@ -1,0 +1,201 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include <tchar.h>
+//---------------------------------------------------------------------------
+
+#pragma argsused
+
+#pragma link "lib_ga.lib"            //lib ga
+#pragma link "lib_multi_obj.lib"     //lib evol optimizer
+
+#include "ga/SOGeneticAlgorithm.h"
+#include "simple_functions.h"
+
+
+#include <libEvolOptimizer/ICNotifier.h>
+#include <libEvolOptimizer/ICQualityFunction.h>
+
+//ALGORITHMS
+//#include <amga2/Amga2.h>
+
+//#include <nsga2/CNSGA2Optimizer.h>
+
+//#include <omniopt/OmniOptOptimizer.h>
+
+#include <emopso/emopso.h>
+
+#include <iostream>
+#include <iomanip>
+#include <iostream>
+
+class ExampleNotifier : public ICNotifier {
+  void onBeforeStart(const char* _name) {
+    std::cout << _name << '\n';
+  }
+
+  void onAfterStop(const char* _name) {
+    std::cout << _name << '\n';
+  }
+
+  void onError(const char* _error)
+  {
+	std::cout << _error << '\n';
+  }
+
+  void onGenerationDone(unsigned int _g) {
+	std::cout << "Generation " <<_g << "done."<< '\n';
+//	CSolution* s = gSOGA->getSolution();
+//	CSObjSolution* sol = dynamic_cast<CSObjSolution*>(s);
+//
+//	std::cout << "f(x)=" << sol->FObjFncVal << '\t';
+//	std::cout << "x_float=[";
+//	for (int i=0; i <sol->FFloatVars.size(); i++) {
+//		 std::cout<<sol->FFloatVars[i]<<' ';
+//	}
+//	std::cout<<"]\t";
+//	std::cout << "x_bin=["  ;
+//	for (int i=0; i <sol->FBinaryVars.size();  i++) {
+//		 std::cout<<sol->FBinaryVars[i]<<' ';
+//	}
+//	std::cout<<"]\n";
+  }
+};
+int _tmain(int argc, _TCHAR* argv[])
+{
+
+//	CSOGA ga;
+//	CRosenbrock r;
+//
+//	ga.setObjectiveFnc(&r);
+//
+//	ExampleNotifier notifier;
+//	ga.setNotifier(&notifier);
+//
+//	ga.setFloatSize(2);
+//	ga.setBinarySize(0);
+//
+//	ga.setGenerations(10000);
+//	ga.setPopSize(500);
+//
+//
+//	for (int i = 0; i < 2 ; i++) {
+//		ga.setFLLimit(-50,i);
+//		ga.setFHLimit(50,i);
+//	}
+//
+////	for (int i = 0; i < ga.getBinarySize() ; i++) {
+////		ga.setBLLimit(-5,i);
+////		ga.setBHLimit(5,i);
+////	}
+//
+//
+//
+//	/*Algorithm confoguration*/
+//
+//	/*Mutation propability*/
+//	//ga.setPMutation(0.01);
+//
+//	/*Crossover propability */
+//	//ga.setPCrossover(0.6);
+//
+//	/*Algorithm type*/
+//	//ga.setAlgType(CSOGA::enSimple);
+//	//ga.setAlgType(CSOGA::enSteadyState);
+//
+//	/*Initialization type*/
+//	//ga.setInitType(CSOGA::enInitUniform);
+//	//ga.setInitType(CSOGA::enInitOrdered);
+//
+//	/*CrossoverType type*/
+//	//ga.setCrossoverType(CSOGA::enCrossUniform);
+//	//ga.setCrossoverType(CSOGA::enCrossEvenOdd);
+//	//ga.setCrossoverType(CSOGA::enCrossOnePoint);
+//	//ga.setCrossoverType(CSOGA::enCrossTwoPoint);
+//	//ga.setCrossoverType(CSOGA::enCrossPartialMatch);
+//	//ga.setCrossoverType(CSOGA::enCrossOrder);
+//	//ga.setCrossoverType(CSOGA::enCrossCycle);
+//
+//	double* point = new double[2];
+////	point[0]=1;
+////	point[1]=1;
+////	ga.calculateObjectiveFnc(point,2);
+//	delete [] point;
+//	ga.run();
+
+	 F1 f1;
+	 F2 f2;
+	 //CRosenbrock r;
+	 //G1 g1;
+
+	 BC1 bc1;
+	 BC2 bc2;
+
+	 //Amga2 algorithm;
+	// CNSGA2Optimizer algorithm;
+	 //OmniOptOptimizer algorithm;
+     EMOPSO algorithm;
+
+	 algorithm.setNumberOfClusters(5);
+	 algorithm.setSeed(0.5);
+
+	 algorithm.addObjectiveFnc(&f1);
+	 algorithm.addObjectiveFnc(&f2);
+
+	 //algorithm.addObjectiveFnc(&bc1);
+	 //algorithm.addObjectiveFnc(&bc2);
+	 //algorithm.addObjectiveFnc(&r);
+	// algorithm.addConstraintFnc(&g1);
+	 ExampleNotifier notifier;
+	 algorithm.setNotifier(&notifier);
+
+
+	 algorithm.setGenerations(150);
+	 algorithm.setFloatSize(1);
+	 algorithm.setBinarySize(0);
+	 algorithm.setPopSize(40);
+
+ // algorithm.setArchiveSize(300);
+   //	algorithm.setSeed(0.5);
+  //	algorithm.setCross(0.1);
+   //	algorithm.setDi(0.5);
+   //	algorithm.setDiM(15.0);
+  //algorithm.setPMut(1.0/algorithm.getFloatSize());
+
+  for (int i = 0; i < algorithm.getFloatSize() ; i++) {
+	algorithm.setFLLimit(-5,i);
+	algorithm.setFHLimit(5,i);
+  }
+
+  for (int i = 0; i < algorithm.getBinarySize(); i++) {
+	algorithm.setBLLimit(-5,i);
+	algorithm.setBHLimit(5,i);
+  }
+
+  algorithm.run();
+  CMultiObjectiveSolutionSet * solutionSet
+	= algorithm.getSolutionSet();
+
+  for (CMultiObjectiveSolutionSet::Iterator solution
+		  = solutionSet->begin();
+	   solution != solutionSet->end();
+	   solution++) {
+
+	   for (int i=0; i < (*solution)->FBinaryVars.size(); i++) {
+			std::cout <<  (*solution)->FBinaryVars[i] << '\t';
+	   }
+	   for (int i=0; i < (*solution)->FFloatVars.size(); i++) {
+			std::cout <<  (*solution)->FFloatVars[i] << '\t';
+	   }
+	   for (int i=0; i < (*solution)->FObjFncVals.size(); i++) {
+			std::cout <<  (*solution)->FObjFncVals[i] << '\t';
+	   }
+	   std::cout << '\n';
+
+  }
+	 std::cin.get();
+	 return 0;
+}
+//---------------------------------------------------------------------------
