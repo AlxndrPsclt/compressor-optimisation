@@ -41,9 +41,10 @@ class CostFunction : public ICQualityFunction  {
     public:
         double calculate(double* _pf, unsigned int _nf) {
             double cost;
+            cost+=cost_coeff1 * _pf[0]/p_in+ cost_coeff2 * _pf[0];
             for (int i = 0; i < _nf-1; ++i)
             {
-                cost+=cost_coeff1 * _pf[i]+ cost_coeff2 * _pf[i+1];
+                cost+=cost_coeff1 * _pf[i+1]/_pf[i]+ cost_coeff2 * _pf[i+1];
             }
             return cost;
     }
