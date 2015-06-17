@@ -7,6 +7,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <algorithm>
+#include <vector>
 
 
 const double Cp = 36.96;  //Ciepło wlasciwe
@@ -27,10 +28,15 @@ class EnergyFunction : public ICQualityFunction  {
     public:
         double calculate(double* _pf, unsigned int _nf) {
             double energy;
+            vector<double> vect_pf(_pf, _pf + _nf);
+            sort(vect_pf.begin(), vect_pf.end());
+
+            energy+= pow(vect_pf[0]/p_in, (K-1/K));
             for (int i = 0; i < _nf-1; ++i)
             {
-                energy+= pow(_pf[i+1]/_pf[i], (K-1/K));
+                energy+= pow(vect_pf[i+1]/vect_pf[i], (K-1/K));
             }
+            energy+= pow(p_out/vect_pf[_nf-1], (K-1/K));
             energy*= Cp*T;
 
             return energy;
@@ -41,26 +47,31 @@ class CostFunction : public ICQualityFunction  {
     public:
         double calculate(double* _pf, unsigned int _nf) {
             double cost;
-            cost+=cost_coeff1 * _pf[0]/p_in+ cost_coeff2 * _pf[0];
+            vector<double> vect_pf(_pf, _pf + _nf);
+            sort(vect_pf.begin(), vect_pf.end());
+            //std::sort(_pf, _pf + _nf);
+            cost+=cost_coeff1 * vect_pf[0]/p_in+ cost_coeff2 * vect_pf[0];                   //Cisnienie p_in jest stale, a nie zmienne
             for (int i = 0; i < _nf-1; ++i)
             {
-                cost+=cost_coeff1 * _pf[i+1]/_pf[i]+ cost_coeff2 * _pf[i+1];
+                cost+=cost_coeff1 * vect_pf[i+1]/vect_pf[i]+ cost_coeff2 * vect_pf[i+1];
             }
+            cost+=cost_coeff1 * p_out/vect_pf[_nf-1]+ cost_coeff2 * p_out;               //Cisnienie p_out jest stale, a nie zmienne
             return cost;
     }
 };
 
 class PressionsIncreasing : public ICQualityFunction {
     double calculate(double* _pf, unsigned int _nf) {
-        double are_consecutive = 0.01;
-        for (int i = 0; i < _nf-1; ++i)
-        {
-            if(_pf[i+1]<_pf[i])
-            {
-                are_consecutive-=1.0;
-            }
-            return  are_consecutive;
-        }
+        //Funkcja daje liczbe ujemna gdy cisnienia nie sa rosnace
+        double are_consecutive = 0.0;
+//        for (int i = 0; i < _nf-1; ++i)
+//        {
+//            if(_pf[i+1]<_pf[i])
+//            {
+//                are_consecutive-=1.0;
+//            }
+            return are_consecutive;
+//        }
     }
 };
 
