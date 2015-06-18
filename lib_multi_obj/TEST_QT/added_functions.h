@@ -49,6 +49,7 @@ class CostFunction : public ICQualityFunction  {
             double cost;
             vector<double> vect_pf(_pf, _pf + _nf);
             sort(vect_pf.begin(), vect_pf.end());
+
             //std::sort(_pf, _pf + _nf);
             cost+=cost_coeff1 * vect_pf[0]/p_in+ cost_coeff2 * vect_pf[0];                   //Cisnienie p_in jest stale, a nie zmienne
             for (int i = 0; i < _nf-1; ++i)

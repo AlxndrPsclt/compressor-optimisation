@@ -12,7 +12,7 @@ import argparse
 
 #Arguments Parsing
 parser = argparse.ArgumentParser()
-parser.add_argument('-f', '--filename', nargs='+',
+parser.add_argument('-f', '--filenames', nargs='+',
                     help="base filename of data to generate", type=str)
 parser.add_argument("-s", "--save", action='store_true',
                     help="Specify if the picture file should be saved.", default=False)
@@ -26,10 +26,12 @@ args = parser.parse_args()
 
 display=args.display
 save=args.save
-filename=args.filename
+filenames=args.filenames
+
+print(filenames)
 
 
-plotXY_filename(plt, filename)
+plotXY_filename(plt, filenames)
 
 if display:
     plt.show()
