@@ -11,7 +11,7 @@ using namespace std;
 
 #include <iostream>
 #include <iomanip>
-
+#include <iostream>
 
 
 //ALGORITHMS
@@ -61,20 +61,20 @@ int main()
     //G1 g1;
 
     //ALGORITHM
-    //Amga2 algorithm;
+    Amga2 algorithm;
     //CNSGA2Optimizer algorithm;
     //OmniOptOptimizer algorithm;
-    EMOPSO algorithm;
+    //EMOPSO algorithm;
 
     algorithm.setNotifier(new ExampleNotifier());
 
     //ALGORITHM CONFIGURATION
-    algorithm.setGenerations(50);
-    algorithm.setFloatSize(MO_PARAM_N);
+    algorithm.setGenerations(200);
+    algorithm.setFloatSize(N);
     algorithm.setBinarySize(0);
     algorithm.setPopSize(200);
     algorithm.setSeed(0.5);
-//    algorithm.setArchiveSize(500);
+    algorithm.setArchiveSize(500);
     //SPECIAL CONF:
 
     //NSGA2:
@@ -88,12 +88,12 @@ int main()
 
 
     //EMOPSO
-    algorithm.setCognitiveAcc(1.5);
-    algorithm.setSocialAcc(1.5);
-    algorithm.setInertia(0.4);
-    algorithm.setFlyTime(7);
-    algorithm.setMaxArchiveSize(250);
-    algorithm.setNumberOfClusters(4);
+    //algorithm.setCognitiveAcc(1.5);
+   // algorithm.setSocialAcc(1.5);
+   // algorithm.setInertia(0.4);
+   // algorithm.setFlyTime(7);
+   // algorithm.setMaxArchiveSize(250);
+   // algorithm.setNumberOfClusters(4);
   //  algorithm.se
 
 

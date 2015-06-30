@@ -21,7 +21,7 @@ const double cost_coeff2 = 0.6;
 const double p_in = 1.6;
 const double p_out = 8.6;
 
-const int N = 7;
+const int MO_PARAM_N = 7;
 
 
 class EnergyFunction : public ICQualityFunction  {
@@ -38,7 +38,9 @@ class EnergyFunction : public ICQualityFunction  {
             }
             energy+= pow(p_out/vect_pf[_nf-1], (K-1/K));
             energy*= Cp*T;
-
+//            if (energy < 1) {
+//                std::cout<<'!';
+//            }
             return energy;
         }
 };

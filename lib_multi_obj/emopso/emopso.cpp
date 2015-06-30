@@ -179,7 +179,7 @@ void EMOPSO::flight(){
   	//numer klastra od zera do nclusters - 1
     int _whichcluster=(int)_i/(nparticles/nclusters);
     int _gbestselected;
-	//wybranie losowego lidera... ale z archiwum najlepszych do tej pory!
+    //wybranie losowego dilera... ale z archiwum najlepszych do tej pory!
     _gbestselected=archive->selectClusteredRandomSolution(_whichcluster);
     Particle _gbestarchparticle(ndimensions,nobjectives, nconstr);
     _gbestarchparticle = archive->solutions[_gbestselected];

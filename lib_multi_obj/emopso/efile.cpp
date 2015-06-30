@@ -1,4 +1,6 @@
 #include "efile.h"
+#include <iostream>
+
 
 EFILE::EFILE(){
   nsolutions=0;
@@ -85,13 +87,13 @@ void EFILE::update(){
 
 
 void EFILE::printSolutions(){
-//  for(int _i(0);_i<nsolutions;_i++){
-//    for(int _j(0);_j<nobjectives;_j++)
-//      cout<<solutions[_i].fx[_j]<<" ";
-//
-//    cout<<endl;
-//
-//  }
+  for(int _i(0);_i<nsolutions;_i++){
+    for(int _j(0);_j<nobjectives;_j++)
+      std::cout<<solutions[_i].fx[_j]<<" ";
+
+    std::cout<<std::endl;
+
+  }
 }
 
 //
@@ -392,8 +394,8 @@ int EFILE::domine2(Particle &_a,Particle &_b){
 
   double constr_a = 0, constr_b = 0;
   for (int i =0 ; i != nconstr; i++ ) {
-      constr_a +=_a.fx[i];
-      constr_b +=_b.fx[i];
+      constr_a +=_a.constraints[i];
+      constr_b +=_b.constraints[i];
   }
 
   if (constr_a > constr_b) {
